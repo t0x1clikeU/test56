@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ボルト・ナット ピッチ早見表</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #f9f9f9;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    select {
+      font-size: 1rem;
+      padding: 0.5rem;
+      width: 100%;
+      margin: 1rem 0;
+    }
+
+    .info-box {
+      background: #fff;
+      border: 1px solid #ddd;
+      padding: 1rem;
+      border-radius: 8px;
+    }
+
+    .info-box p {
+      margin: 0.5rem 0;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      color: #888;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔧 ボルト・ナット ピッチ早見表</h1>
+
+  <label for="sizeSelect">Mサイズを選択：</label>
+  <select id="sizeSelect">
+    <option value="">-- 選択してください --</option>
+  </select>
+
+  <div id="info" class="info-box" style="display: none;">
+    <h2 id="title"></h2>
+    <p>🔩 ピッチ（並目）: <span id="normalPitch"></span> mm</p>
+    <p>🔩 ピッチ（細目）: <span id="finePitch"></span> mm</p>
+    <p>🧰 六角対辺サイズ: <span id="widthAcrossFlats"></span> mm</p>
+    <p>⚙️ 参考トルク: <span id="torque"></span> N·m</p>
+  </div>
+
+  <footer>© 2025 t0x1c</footer>
+
+  <script>
+    const boltData = {
+      "M1": {
+        pitch: { normal: "0.25", fine: "-" },
+        width: "2",
+        torque: "-"
+      },
+      "M1.2": {
+        pitch: { normal: "0.25", fine: "-" },
+        width: "2.5",
+        torque: "-"
+      },
+      "M1.4": {
+        pitch: { normal: "0.3", fine: "-" },
+        width: "3",
+        torque: "-"
+      },
+      "M1.6": {
+        pitch: { normal: "0.35", fine: "-" },
+        width: "3.2",
+        torque: "-"
+      },
+      "M2": {
+        pitch: { normal: "0.4", fine: "0.25" },
+        width: "4",
+        torque: "-"
+      },
+      "M2.5": {
+        pitch: { normal: "0.45", fine: "0.35" },
+        width: "5",
+        torque: "-"
+      },
+      "M3": {
+        pitch: { normal: "0.5", fine: "0.35" },
+        width: "5.5",
+        torque: "-"
+      },
+      "M4": {
+        pitch: { normal: "0.7", fine: "0.5" },
+        width: "7",
+        torque: "-"
+      },
+      "M5": {
+        pitch: { normal: "0.8", fine: "0.5" },
+        width: "8",
+        torque: "-"
+      },
+      "M6": {
+        pitch: { normal: "1.0", fine: "0.75" },
+        width: "10",
+        torque: "9.8"
+      },
+      "M8": {
+        pitch: { normal: "1.25", fine: "1.0" },
+        width: "13",
+        torque: "23"
+      },
+      "M10": {
+        pitch: { normal: "1.5", fine: "1.25" },
+        width: "17",
+        torque: "46"
+      },
+      "M12": {
+        pitch: { normal: "1.75", fine: "1.25" },
+        width: "19",
+        torque: "79"
+      },
+      "M14": {
+        pitch: { normal: "2.0", fine: "1.5" },
+        width: "22",
+        torque: "127"
+      },
+      "M16": {
+        pitch: { normal: "2.0", fine: "1.5" },
+        width: "24",
+        torque: "197"
+      },
+      "M18": {
+        pitch: { normal: "2.5", fine: "1.5" },
+        width: "27",
+        torque: "275"
+      },
+      "M20": {
+        pitch: { normal: "2.5", fine: "1.5" },
+        width: "30",
+        torque: "395"
+      },
+      "M22": {
+        pitch: { normal: "2.5", fine: "1.5" },
+        width: "32",
+        torque: "540"
+      },
+      "M24": {
+        pitch: { normal: "3.0", fine: "2.0" },
+        width: "36",
+        torque: "660"
+      },
+      "M27": {
+        pitch: { normal: "3.0", fine: "2.0" },
+        width: "41",
+        torque: "870"
+      },
+      "M30": {
+        pitch: { normal: "3.5", fine: "2.0" },
+        width: "46",
+        torque: "1150"
+      },
+      "M33": {
+        pitch: { normal: "3.5", fine: "2.0" },
+        width: "50",
+        torque: "1450"
+      },
+      "M36": {
+        pitch: { normal: "4.0", fine: "3.0" },
+        width: "55",
+        torque: "1800"
+      },
+      "M39": {
+        pitch: { normal: "4.0", fine: "3.0" },
+        width: "60",
+        torque: "2200"
+      },
+      "M42": {
+        pitch: { normal: "4.5", fine: "3.0" },
+        width: "65",
+        torque: "2600"
+      },
+      "M45": {
+        pitch: { normal: "4.5", fine: "3.0" },
+        width: "70",
+        torque: "3000"
+      },
+      "M48": {
+        pitch: { normal: "5.0", fine: "3.0" },
+        width: "75",
+        torque: "3400"
+      },
+      "M52": {
+        pitch: { normal: "5.0", fine: "3.0" },
+        width: "80",
+        torque: "3900"
+      },
+      "M56": {
+        pitch: { normal: "5.5", fine: "3.0" },
+        width: "85",
+        torque: "4400"
+      },
+      "M60": {
+        pitch: { normal: "5.5", fine: "3.0" },
+        width: "90",
+        torque: "4900"
+      },
+      "M64": {
+        pitch: { normal: "6.0", fine: "4.0" },
+        width: "95",
+        torque: "5400"
+      }
+    };
+
+    const select = document.getElementById("sizeSelect");
+    const infoBox = document.getElementById("info");
+
+    for (const size in boltData) {
+      const option = document.createElement("option");
+      option.value = size;
+      option.textContent = size;
+      select.appendChild(option);
+    }
+
+    select.addEventListener("change", () => {
+      const size = select.value;
+      if (!size || !boltData[size]) {
+        infoBox.style.display = "none";
+        return;
+      }
+
+      const data = boltData[size];
+      document.getElementById("title").textContent = `${size} ボルト / ナットの情報`;
+      document.getElementById("normalPitch").textContent = data.pitch.normal;
+      document.getElementById("finePitch").textContent = data.pitch.fine;
+      document.getElementById("widthAcrossFlats").textContent = data.width;
+      document.getElementById("torque").textContent = data.torque;
+
+      infoBox.style.display = "block";
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Excel 関数・マクロ辞典</title>
+  <style>
+    body { font-family: sans-serif; padding: 1em; }
+    input, select, button { font-size: 1em; padding: 0.5em; width: 100%; margin: 0.5em 0; }
+    .result { white-space: pre-wrap; background: #f9f9f9; padding: 1em; border-radius: 8px; }
+  </style>
+</head>
+<body>
+
+<h2>📘 Excel 関数・マクロ検索</h2>
+
+<select id="type">
+  <option value="function">関数</option>
+  <option value="macro">マクロ</option>
+</select>
+
+<input type="text" id="keyword" placeholder="例: VLOOKUP, セルの色">
+<button onclick="search()">検索</button>
+
+<div id="result" class="result">ここに結果が表示されます</div>
+
+<script>
+let functions = {}, macros = {};
+
+fetch("functions.json").then(r => r.json()).then(d => functions = d);
+fetch("macros.json").then(r => r.json()).then(d => macros = d);
+
+function search() {
+  const type = document.getElementById("type").value;
+  const keyword = document.getElementById("keyword").value.trim().toLowerCase();
+  const resultBox = document.getElementById("result");
+
+  const data = (type === "function") ? functions : macros;
+  let found = false;
+  let resultText = "";
+
+  for (const key in data) {
+    const item = data[key];
+    const haystack = `${key} ${item.説明} ${item.構文 || ""} ${item.カテゴリ || ""}`.toLowerCase();
+
+    if (haystack.includes(keyword)) {
+      found = true;
+      if (type === "function") {
+        resultText += `📌 ${key}\n説明: ${item.説明}\n構文: ${item.構文}\nカテゴリ: ${item.カテゴリ}\n\n`;
+      } else {
+        resultText += `📌 ${key}\n説明: ${item.説明}\n\nコード:\n${item.コード}\n\n`;
+      }
+    }
+  }
+
+  resultBox.textContent = found ? resultText : "🔎 見つかりませんでした。";
+}
+
+</script>
+ <footer>© 2025 t0x1c</footer>
+</body>
+</html>

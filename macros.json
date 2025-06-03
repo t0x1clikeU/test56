@@ -1,0 +1,22 @@
+{
+  "セルの色を変える": {
+    "コード": "Sub 色変更()\n    Range(\"A1\").Interior.Color = RGB(255, 0, 0)\nEnd Sub",
+    "説明": "セルA1の背景色を赤に変更します。"
+  },
+  "メッセージボックスを表示": {
+    "コード": "Sub 挨拶()\n    MsgBox \"こんにちは、世界！\"\nEnd Sub",
+    "説明": "あいさつのメッセージボックスを表示します。"
+  },
+  "セルに日付を入力": {
+    "コード": "Sub 日付入力()\n    Range(\"A1\").Value = Date\nEnd Sub",
+    "説明": "セルA1に今日の日付を入力します。"
+  },
+  "ループ処理でセルに番号入力": {
+    "コード": "Sub 連番入力()\n    Dim i As Integer\n    For i = 1 To 10\n        Cells(i, 1).Value = i\n    Next i\nEnd Sub",
+    "説明": "A列に1から10までの番号を入力します。"
+  },
+  "ワークシートの名前を一覧取得": {
+    "コード": "Sub シート名一覧()\n    Dim ws As Worksheet, i As Integer\n    i = 1\n    For Each ws In Worksheets\n        Cells(i, 1).Value = ws.Name\n        i = i + 1\n    Next ws\nEnd Sub",
+    "説明": "すべてのワークシート名をA列に表示します。"
+  }
+}
